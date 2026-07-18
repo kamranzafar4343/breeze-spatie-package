@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,7 +38,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Update Status
     Route::post('/status/{id}', [TaskController::class, 'updateStatus'])
         ->name('status.update');
-});
+
+
+    //(Role Management)
+    Route::get('/users', [UserController::class, 'index'])
+       ->name('users');
+
+    // Update Role
+    Route::post('/role/{id}', [UserController::class, 'updateRole'])
+        ->name('update.role');
+
+    Route::get('/user-rights', [UserController::class, 'userRights'])
+        ->name('user-rights');
+
+        });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
