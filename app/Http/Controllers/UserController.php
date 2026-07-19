@@ -6,6 +6,7 @@ use App\Models\User as ModelsUser;
 use App\Models\Task as TaskModel;
 
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 use Illuminate\Http\Request;
 
@@ -21,75 +22,36 @@ class UserController extends Controller
         return view('users', compact('users', 'roles'));
     }
     
-    public function user_rights()
-    {
-         $users = ModelsUser::all();
-         $roles = Role::all();
-        return view('user_rights', compact('users', 'roles'));
-    }
 
     public function updateRole(Request $request, $id)
     {
 
-        // dd($request->role);
-
-        // $user->syncRoles($request->role);
-
         $user = ModelsUser::findOrFail($id);
 
-        //reset role and updates role 
+        //(User Rights)reset role and updates role 
         $user->syncRoles($request->role);
-        
-        // dd($user->fresh()->getRoleNames());
 
         return back()->with('success', 'Role updated.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+  
+     public function groupRights()
     {
-        //
+
+    
+         $permissions = Permission::all();
+         $roles = Role::all();
+        return view('group_rights', compact('permissions', 'roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function updateGroupRights(Request $request, $role)
+{
+    
+    $role = Role::findByName($role);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    // (Group Rights)sync the permission of roles
+    $role->syncPermissions($request->permissions ?? []);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    return back()->with('success', 'Group rights updated successfully.');
+}
 }

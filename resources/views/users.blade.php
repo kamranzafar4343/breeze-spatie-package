@@ -43,14 +43,7 @@
                         </p>
                     </div>
 
-                    <div class="text-right">
-                        {{-- define admin, manager, user rights --}}
-                        <a href="{{ route('user_rights')}}"
-                                        
-                                        class="inline-block bg-grey-600 hover:bg-grey-700 text-white px-3 py-2 rounded">
-                                        user rights
-                                    </a>
-                    </div>
+                   
 
                 
 

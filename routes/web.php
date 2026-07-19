@@ -40,16 +40,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('status.update');
 
 
-    //(Role Management)
-    Route::get('/users', [UserController::class, 'index'])
-       ->name('users');
+    //(Show & update User Rights)
+    
+    // Route::get('/users', [UserController::class, 'index'])
+    //    ->name('users');
 
-    // Update Role
+       Route::middleware(['auth','permission:manage user rights'])
+    ->get('/users', [UserController::class,'index'])
+    ->name('users');
+    
+    // Update Role for a User
     Route::post('/role/{id}', [UserController::class, 'updateRole'])
         ->name('update.role');
 
-    Route::get('/user-rights', [UserController::class, 'userRights'])
-        ->name('user-rights');
+
+    //(show & update group rights)
+              Route::middleware(['auth','permission:manage group rights'])
+    ->get('/group_rights', [UserController::class,'groupRights'])
+    ->name('group_rights');
+   
+        Route::post('/group_rights/{role}', [UserController::class, 'updateGroupRights'])
+        ->name('group_rights.update');
 
         });
 
