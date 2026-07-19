@@ -37,7 +37,7 @@ class UserController extends Controller
   
      public function groupRights()
     {
-
+dd(Role::findByName('admin')->getPermissionNames());
     
          $permissions = Permission::all();
          $roles = Role::all();
