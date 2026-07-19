@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('/users', [UserController::class, 'index'])
     //    ->name('users');
 
-       Route::middleware(['auth','permission:manage user rights'])
+       Route::middleware(['auth','permission:manage users'])
     ->get('/users', [UserController::class,'index'])
     ->name('users');
     

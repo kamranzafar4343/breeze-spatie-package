@@ -27,7 +27,7 @@ class RolePermissionSeeder extends Seeder
             'edit tasks',
             'delete tasks',
             'update task status',
-            'manage user rights',
+            'manage users',
             'manage group rights',
         ];
 
