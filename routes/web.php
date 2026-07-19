@@ -18,33 +18,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('dashboard');
 
     // Add Task
-    Route::get('/add', [TaskController::class, 'add'])
+    Route::middleware(['auth', 'permission:create tasks'])
+    ->get('/add', [TaskController::class, 'add'])
         ->name('add');
-
+    
+    
     Route::post('/store', [TaskController::class, 'store'])
         ->name('store');
 
     // Edit Task
-    Route::get('/edit/{id}', [TaskController::class, 'edit'])
+    Route::middleware(['auth', 'permission:edit tasks'])
+    ->get('/edit/{id}', [TaskController::class, 'edit'])
         ->name('edit');
 
     Route::post('/update/{id}', [TaskController::class, 'update'])
         ->name('update');
 
     // Delete Task
-    Route::get('/delete/{id}', [TaskController::class, 'delete'])
+    Route::middleware(['auth', 'permission:delete tasks'])
+    ->get('/delete/{id}', [TaskController::class, 'delete'])
         ->name('delete');
 
     // Update Status
-    Route::post('/status/{id}', [TaskController::class, 'updateStatus'])
+    Route::middleware(['auth', 'permission:update task status'])
+    ->post('/status/{id}', [TaskController::class, 'updateStatus'])
         ->name('status.update');
 
-
     //(Show & update User Rights)
-    
-    // Route::get('/users', [UserController::class, 'index'])
-    //    ->name('users');
-
        Route::middleware(['auth','permission:manage users'])
     ->get('/users', [UserController::class,'index'])
     ->name('users');
@@ -55,10 +55,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //(show & update group rights)
-              Route::middleware(['auth','permission:manage group rights'])
+        Route::middleware(['auth','permission:manage group rights'])
     ->get('/group_rights', [UserController::class,'groupRights'])
     ->name('group_rights');
    
+    //update group rights for a role
         Route::post('/group_rights/{role}', [UserController::class, 'updateGroupRights'])
         ->name('group_rights.update');
 
