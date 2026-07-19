@@ -1,59 +1,640 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Manager with Laravel Breeze & Spatie Permission
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple Task Manager built with Laravel 12 to revise CRUD operations, authentication, role-based access control (RBAC), and permissions using the Spatie Laravel Permission package.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- User Authentication (Laravel Breeze)
+- CRUD Operations for Tasks
+- Task Status Update
+- Role Management (Admin, Manager, User)
+- Group Rights (Role Permissions)
+- Middleware Protected Routes
+- User Role Assignment
+- Permission Based Authorization
+- Tailwind CSS UI
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+# Technologies Used
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- PHP 8.2+
+- Laravel 12
+- Laravel Breeze
+- Spatie Laravel Permission
+- MySQL
+- Blade
+- Tailwind CSS
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+# Project Structure
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+Authentication
+        │
+        ▼
+User Login
+        │
+        ▼
+Assigned Role
+(Admin / Manager / User)
+        │
+        ▼
+Role Permissions
+        │
+        ▼
+Middleware checks permission
+        │
+        ▼
+Access Granted / Denied
+```
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Installation
 
-## Contributing
+Clone the project
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+git clone <repository-url>
+```
 
-## Code of Conduct
+Go inside project
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+cd task-manager
+```
 
-## Security Vulnerabilities
+Install dependencies
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer install
+```
 
-## License
+Install frontend packages
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+npm install
+```
+
+Generate application key
+
+```bash
+php artisan key:generate
+```
+
+Create environment file
+
+```bash
+cp .env.example .env
+```
+
+Configure database inside `.env`
+
+```
+DB_DATABASE=task_manager
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Run migrations and seeders
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Start development server
+
+```bash
+php artisan serve
+```
+
+Compile assets
+
+```bash
+npm run dev
+```
+
+---
+
+# Default Users
+
+| Role | Email | Password |
+|-------|-------|----------|
+| Admin | admin@test.com | password |
+| Manager | manager@test.com | password |
+| User | user@test.com | password |
+
+---
+
+# Laravel Breeze
+
+Laravel Breeze provides a simple authentication system.
+
+Installed using
+
+```bash
+composer require laravel/breeze --dev
+```
+
+Install Blade stack
+
+```bash
+php artisan breeze:install
+```
+
+Run
+
+```bash
+npm install
+npm run dev
+php artisan migrate
+```
+
+Breeze provides
+
+- Login
+- Register
+- Forgot Password
+- Email Verification
+- Profile Page
+- Authentication Middleware
+
+---
+
+# Spatie Laravel Permission
+
+Installed using
+
+```bash
+composer require spatie/laravel-permission
+```
+
+Publish files
+
+```bash
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+
+Run migration
+
+```bash
+php artisan migrate
+```
+
+Add trait inside User model
+
+```php
+use HasRoles;
+
+class User extends Authenticatable
+{
+    use HasRoles;
+}
+```
+
+---
+
+# Database Tables
+
+Spatie creates the following tables.
+
+## roles
+
+Stores all available roles.
+
+Example
+
+| id | name |
+|----|------|
+|1|admin|
+|2|manager|
+|3|user|
+
+---
+
+## permissions
+
+Stores all permissions.
+
+Example
+
+| id | name |
+|----|--------------------|
+|1|create tasks|
+|2|edit tasks|
+|3|delete tasks|
+|4|update task status|
+|5|manage users|
+|6|manage group rights|
+
+---
+
+## role_has_permissions
+
+Maps permissions to roles.
+
+Example
+
+Admin
+
+```
+create tasks
+edit tasks
+delete tasks
+update task status
+manage users
+manage group rights
+```
+
+Manager
+
+```
+create tasks
+edit tasks
+update task status
+```
+
+User
+
+```
+create tasks
+```
+
+---
+
+## model_has_roles
+
+Assigns a role to a user.
+
+Example
+
+```
+User #1 → Admin
+
+User #2 → Manager
+
+User #3 → User
+```
+
+---
+
+## model_has_permissions
+
+Assigns permissions directly to a user.
+
+This table is **empty** in this project because permissions are assigned through roles instead of individual users.
+
+---
+
+# Role Hierarchy
+
+## Admin
+
+- Create Task
+- Edit Task
+- Delete Task
+- Update Status
+- Manage Users
+- Manage Group Rights
+
+---
+
+## Manager
+
+- Create Task
+- Edit Task
+- Update Status
+
+---
+
+## User
+
+- Create Task
+
+---
+
+# User Rights
+
+Admin can assign roles to users.
+
+Example
+
+```
+John
+
+▼ Manager
+```
+
+Selecting another role automatically updates
+
+```php
+$user->syncRoles($request->role);
+```
+
+---
+
+# Group Rights
+
+Admin can assign permissions to each role.
+
+Example
+
+Manager
+
+```
+☑ Create Task
+
+☑ Edit Task
+
+☑ Update Status
+
+☐ Delete Task
+```
+
+Saving executes
+
+```php
+$role->syncPermissions($request->permissions ?? []);
+```
+
+This updates the
+
+```
+role_has_permissions
+```
+
+table.
+
+---
+
+# Important Spatie Functions
+
+## Create Role
+
+```php
+Role::create([
+    'name' => 'manager'
+]);
+```
+
+---
+
+## Create Permission
+
+```php
+Permission::create([
+    'name' => 'edit tasks'
+]);
+```
+
+---
+
+## Assign Role
+
+```php
+$user->assignRole('admin');
+```
+
+---
+
+## Replace User Role
+
+```php
+$user->syncRoles('manager');
+```
+
+---
+
+## Remove Role
+
+```php
+$user->removeRole('manager');
+```
+
+---
+
+## Assign Permission
+
+```php
+$role->givePermissionTo('edit tasks');
+```
+
+---
+
+## Replace Permissions
+
+```php
+$role->syncPermissions([
+    'create tasks',
+    'edit tasks'
+]);
+```
+
+---
+
+## Check Role
+
+```php
+$user->hasRole('admin')
+```
+
+---
+
+## Check Permission
+
+```php
+$user->can('edit tasks')
+```
+
+---
+
+## Get User Roles
+
+```php
+$user->getRoleNames();
+```
+
+---
+
+## Get Permissions
+
+```php
+$user->getPermissionNames();
+```
+
+---
+
+# Middleware Protection
+
+Routes are protected using Spatie middleware.
+
+Example
+
+```php
+Route::middleware([
+    'auth',
+    'permission:manage users'
+])->group(function () {
+
+    Route::get('/users',
+        [UserController::class, 'index']
+    );
+
+});
+```
+
+Flow
+
+```
+User
+
+↓
+
+Logged In?
+
+↓
+
+Yes
+
+↓
+
+Permission Exists?
+
+↓
+
+Yes
+
+↓
+
+Controller
+
+↓
+
+View
+
+↓
+
+No
+
+↓
+
+403 Forbidden
+```
+
+---
+
+# Seeders
+
+Seeder creates
+
+- Roles
+- Permissions
+- Users
+- Role Assignments
+- Permission Assignments
+
+Run
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
+
+# Useful Artisan Commands
+
+Generate key
+
+```bash
+php artisan key:generate
+```
+
+Serve project
+
+```bash
+php artisan serve
+```
+
+Fresh migration
+
+```bash
+php artisan migrate:fresh
+```
+
+Fresh migration with seed
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Clear cache
+
+```bash
+php artisan optimize:clear
+```
+
+Reset Spatie permission cache
+
+```bash
+php artisan permission:cache-reset
+```
+
+Create Controller
+
+```bash
+php artisan make:controller UserController
+```
+
+Create Seeder
+
+```bash
+php artisan make:seeder RolePermissionSeeder
+```
+
+---
+
+# Learning Outcomes
+
+This project helped revise
+
+- Laravel CRUD
+- MVC Architecture
+- Blade Templates
+- Route Model Binding
+- Form Validation
+- Authentication with Breeze
+- Authorization
+- RBAC (Role-Based Access Control)
+- Middleware
+- Route Protection
+- Laravel Seeders
+- Database Migrations
+- Spatie Laravel Permission
+- User Role Management
+- Group Permission Management
+
+---
+
+# Future Improvements
+
+- Permission middleware for CRUD buttons
+- Dashboard analytics
+- Search and filtering
+- Pagination
+- Task ownership
+- Audit logs
+- Soft Deletes
+- Activity Log using another Spatie package
+- REST API
+- Unit Tests
+- Email Notifications
+
+---
+
+# License
+
+This project is created for learning Laravel authentication, authorization, and role-based access control using Laravel Breeze and Spatie Permission.
