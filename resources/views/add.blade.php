@@ -90,11 +90,10 @@
                         </div>
 
                         <div class="flex justify-end gap-3">
-                            <button
-                                type="reset"
-                                class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
-                                Reset
-                            </button>
+                            <a href="{{ route('dashboard') }}"
+                                class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded">
+                                Cancel
+                            </a>
 
                             <button
                                 type="submit"
