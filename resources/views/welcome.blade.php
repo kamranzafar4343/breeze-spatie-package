@@ -19,80 +19,186 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
-                    @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >
-                            Dashboard
-                        </a>
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                        >
-                            Log in
-                        </a>
+   <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex min-h-screen flex-col items-center justify-center p-6 lg:p-8">
 
-                        @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                                Register
-                            </a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
-        </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-        <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-
-        <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
-
-            <h1 class="mb-3 text-2xl font-bold">
-                Task Manager
-            </h1>
-
-            <p class="mb-6 text-[#706f6c] dark:text-[#A1A09A]">
-                A simple Task Manager built with Laravel 12, Breeze Authentication and Spatie Roles & Permissions.
-                Users can create, manage and track tasks based on their assigned role.
-            </p>
-
-        <div class="space-y-3">
-        <div>
-        <strong>Admin</strong>
-        <p class="text-[#706f6c] dark:text-[#A1A09A]">
-        Full access to create, view, edit and delete all tasks.
-        </p>
-        </div>
-
-        <div>
-        <strong>Manager</strong>
-        <p class="text-[#706f6c] dark:text-[#A1A09A]">
-        Can create, view and edit tasks.
-        </p>
-        </div>
-
-        <div>
-        <strong>User</strong>
-        <p class="text-[#706f6c] dark:text-[#A1A09A]">
-        Can create and view tasks.
-        </p>
-        </div>
-        </div>
-
-        </div>
-
-        </main>
-        </div>
-
+    <header class="mb-6 w-full max-w-5xl text-sm">
         @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
+            <nav class="flex items-center justify-end gap-3">
+                @auth
+                    <a
+                        href="{{ route('dashboard') }}"
+                        class="rounded-lg border border-gray-300 px-4 py-2 font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-800">
+                        Dashboard
+                    </a>
+                @else
+                    <a
+                        href="{{ route('login') }}"
+                        class="rounded-lg px-4 py-2 font-medium transition hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+                        Log in
+                    </a>
+
+                    @if (Route::has('register'))
+                        <a
+                            href="{{ route('register') }}"
+                            class="rounded-lg border border-gray-300 px-4 py-2 font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-800">
+                            Register
+                        </a>
+                    @endif
+                @endauth
+            </nav>
         @endif
-    </body>
+    </header>
+
+    <main class="w-full max-w-5xl">
+
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-[#161615]">
+
+            <div class="p-8 lg:p-12">
+
+                {{-- Heading --}}
+                <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight text-white">
+                            Task Manager
+                        </h1>
+
+                        <p class="mt-2 text-gray-600 dark:text-gray-400">
+                            Laravel 12 • Breeze Authentication • Spatie Roles & Permissions
+                        </p>
+                    </div>
+
+                    <a
+                        href="https://github.com/kamranzafar4343/breeze-spatie-package"
+                        target="_blank"
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800">
+                        📖 Read Documentation
+                        <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+                    </a>
+
+                </div>
+
+                {{-- Description --}}
+                <p class="mb-8 max-w-3xl text-base leading-7 text-gray-600 dark:text-gray-400">
+                    A role-based Task Manager built using Laravel 12, Laravel Breeze, and the Spatie Permission package.
+                    The application demonstrates authentication, authorization, CRUD operations, role assignment,
+                    permission management, and protected routes using Laravel's built-in authorization features.
+                </p>
+
+                {{-- Roles --}}
+                <div class="grid gap-5 md:grid-cols-3">
+
+                    <div class="rounded-xl border border-red-200 bg-red-50 p-6 dark:border-red-900 dark:bg-red-950/20">
+                        <div class="mb-3 flex items-center gap-2">
+                            <span class="text-xl">👑</span>
+                            <h3 class="text-lg font-semibold text-red-700 dark:text-red-400">
+                                Admin
+                            </h3>
+                        </div>
+
+                        <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                            <li>✔ Full task management</li>
+                            <li>✔ Manage users</li>
+                            <li>✔ Assign roles</li>
+                            <li>✔ Manage permissions</li>
+                            <li>✔ Access all modules</li>
+                        </ul>
+                    </div>
+
+                    <div class="rounded-xl border border-yellow-200 bg-yellow-50 p-6 dark:border-yellow-900 dark:bg-yellow-950/20">
+                        <div class="mb-3 flex items-center gap-2">
+                            <span class="text-xl">👨‍💼</span>
+                            <h3 class="text-lg font-semibold text-yellow-700 dark:text-yellow-400">
+                                Manager
+                            </h3>
+                        </div>
+
+                        <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                            <li>✔ View tasks</li>
+                            <li>✔ Create tasks</li>
+                            <li>✔ Edit tasks</li>
+                            <li>✔ Update task status</li>
+                            <li>✖ Delete tasks</li>
+                        </ul>
+                    </div>
+
+                    <div class="rounded-xl border border-green-200 bg-green-50 p-6 dark:border-green-900 dark:bg-green-950/20">
+                        <div class="mb-3 flex items-center gap-2">
+                            <span class="text-xl">👤</span>
+                            <h3 class="text-lg font-semibold text-green-700 dark:text-green-400">
+                                User
+                            </h3>
+                        </div>
+
+                        <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                            <li>✔ View tasks</li>
+                            <li>✔ Create tasks</li>
+                            <li>✖ Edit tasks</li>
+                            <li>✖ Delete tasks</li>
+                            <li>✖ User management</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                {{-- Demo Accounts --}}
+<div class="mt-10 rounded-xl border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-[#1b1b1b]">
+
+    <h2 class="mb-4 text-xl font-semibold text-white">
+        Demo Accounts
+    </h2>
+
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400 text-white">
+        Use the following demo accounts to explore different role permissions.
+    </p>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+
+            <thead>
+                <tr class="text-left text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    <th class="px-4 py-3">Role</th>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Password</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+
+                <tr>
+                    <td class="px-4 py-3 font-medium text-white">👑 Admin</td>
+                    <td class="px-4 py-3 font-mono text-white">admin@test.com</td>
+                    <td class="px-4 py-3 font-mono text-white">password</td>
+                </tr>
+
+                <tr>
+                    <td class="px-4 py-3 font-medium text-white">👨‍💼 Manager</td>
+                    <td class="px-4 py-3 font-mono text-white">manager@test.com</td>
+                    <td class="px-4 py-3 font-mono text-white">password</td>
+                </tr>
+
+                <tr>
+                    <td class="px-4 py-3 font-medium text-white">👤 User</td>
+                    <td class="px-4 py-3 font-mono text-white">user@test.com</td>
+                    <td class="px-4 py-3 font-mono text-white">password</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    @if (Route::has('login'))
+        <div class="hidden h-12 lg:block"></div>
+    @endif
+
+</body>
 </html>
