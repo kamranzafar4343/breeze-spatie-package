@@ -16,16 +16,22 @@
                         {{ __('Task Manager') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                @can('manage users')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
                         {{ __('User Rights') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                @endcan
+                
+                @can('manage group rights')
+                  <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('group_rights')" :active="request()->routeIs('group_rights')">
                         {{ __('Group Rights') }}
                     </x-nav-link>
-                </div>
+                </div>  
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
@@ -81,6 +87,23 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+
+        @can('manage users')
+            <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                {{ __('User Rights') }}
+            </x-responsive-nav-link>
+        </div>
+        @endcan
+        
+        @can('manage group rights')
+            <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('group_rights')" :active="request()->routeIs('group_rights')">
+                {{ __('Group Rights') }}
+            </x-responsive-nav-link>
+        </div>
+        @endcan
+        
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

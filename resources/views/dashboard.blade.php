@@ -76,10 +76,13 @@
                         All Tasks
                     </h3>
 
-                    <a href="{{ route('add') }}"
+                    @can('create tasks')
+                         <a href="{{ route('add') }}"
                         class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-indigo-700">
                         + Add Task
                     </a>
+                    @endcan
+                   
 
                 </div>
 
@@ -105,9 +108,12 @@
                                     Created
                                 </th>
 
-                                <th class="px-6 py-3 text-left">
+                                @can('update task status')
+                                    <th class="px-6 py-3 text-left">
                                     Status
                                 </th>
+                                @endcan
+                                
 
                                 <th class="px-6 py-3 text-center">
                                     Actions
@@ -139,7 +145,8 @@
                                     {{ $task->created_at->format('d M Y') }}
                                 </td>
 
-                                <td class="px-6 py-4">
+                                @can('update task status')
+                                    <td class="px-6 py-4">
 
                                     <form action="{{ route('status.update', base64_encode($task->id)) }}" method="POST">
                                         @csrf
@@ -164,19 +171,26 @@
                                     </form>
 
                                 </td>
+                                @endcan
+                                
 
                                 <td class="px-6 py-4 text-center space-x-2">
 
+                                    @can('edit tasks')
                                    <a href="{{ route('edit', base64_encode($task->id)) }}"
                                         class="inline-flex items-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-medium text-black shadow hover:bg-yellow-600">
                                         Edit
-                                    </a>
+                                    </a>                                        
+                                    @endcan
 
+
+                                    @can('delete tasks')
                                     <a href="{{ route('delete', base64_encode($task->id)) }}"
                                         onclick="return confirm('Delete this task?')"
                                         class="inline-block bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded">
                                         Delete
                                     </a>
+                                    @endcan
 
                                 </td>
 
